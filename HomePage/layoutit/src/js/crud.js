@@ -46,7 +46,7 @@ $(document).ready(function () {
     })
   }
 
-  var categoriasIni=[{"id": 4587421365214785, "nome": "Estágio Análise e Desenvolimento de Sistemas", "creation": "10/09/2015 10:45:00"}, {"nome": "Estágio Banco de Dados", "creation": "12/09/2015 18:40:42","id": 7845212639854712}, {"nome": "Estágio Manutenção de Aeronaves", "creation": "13/09/2015 10:12:05","id": 1245784123658951}];
+  var categoriasIni=[{"id": 4587421365214785, "nome": "Estágio Análise e Desenvolimento de Sistemas", "creation": "10/09/2015 10:45:00"}, {"id": 7845212639854712, "nome": "Estágio Manufatura", "creation": "12/09/2015 18:40:42"}, {"id": 1245784123658951, "nome": "Estágio Manutenção de Aeronaves", "creation": "13/09/2015 10:12:05"}];
   listarCategorias(categoriasIni);
 
   function mostrarErros(erros) {
@@ -60,26 +60,32 @@ $(document).ready(function () {
 
   $('#form-categoria').submit(function (evento) {
     evento.preventDefault();
+    var valid=true;
     limparErros();
+        var id = $idInput.val();
+    if (id === '') {
+      mostrarErros({'id': 'Campo Obrigatório'})
+      valid=false;
+    }
     var nome = $nomeInput.val();
     if (nome === '') {
       mostrarErros({'nome': 'Campo Obrigatório'})
-    }
-    var id = $idInput.val();
-    if (id === '') {
-      mostrarErros({'id': 'Campo Obrigatório'})
-    }
+      valid=false;
+    } 
     var creation = $creationInput.val();
     if (creation === '') {
       mostrarErros({'creation': 'Campo Obrigatório'})
+      valid=false;
     }
-    else {
+    if(valid) {
       adicionarCategoria({"id": id,
         "nome": nome,
         "creation": creation});
       $nomeInput.val('');
-      $creationInput.val('');
       $idInput.val('');
+      $creationInput.val('');
     }
+
   });
+
 });
